@@ -1,0 +1,6 @@
+{
+  "appName": "boilerplate",
+  "topicsToConsume": [
+    "boilerplate-events"
+  ]
+}

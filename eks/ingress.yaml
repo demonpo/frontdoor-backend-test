@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: nginx
+spec:
+  controller: k8s.io/ingress-nginx
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prometeo-nestjs-hex-boilerplate-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "api.simple-bank.org"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: prometeo-nestjs-hex-boilerplate-api-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - api.prometeo-nestjs-hex-boilerplate.org
+    secretName: prometeo-nestjs-hex-boilerplate-api-cert

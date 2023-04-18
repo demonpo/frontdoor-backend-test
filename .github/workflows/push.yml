@@ -1,0 +1,23 @@
+name: Tests
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create .env
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: ./.env
+          write-mode: overwrite
+          contents: ${{ secrets.TEST_ENV }}
+      - name: Create .npmrc
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: ./.npmrc
+          write-mode: overwrite
+          contents: ${{ secrets.DOT_NPMRC }}
+      - name: Build the stack
+        run: docker-compose up -d
+      - name: Test
+        run: docker exec app npm run test

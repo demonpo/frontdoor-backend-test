@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometeo-nestjs-hex-boilerplate-api-deployment
+  labels:
+    app: prometeo-nestjs-hex-boilerplate-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prometeo-nestjs-hex-boilerplate-api
+  template:
+    metadata:
+      labels:
+        app: prometeo-nestjs-hex-boilerplate-api
+    spec:
+      containers:
+      - name: prometeo-nestjs-hex-boilerplate-api
+        image: 036310137459.dkr.ecr.us-east-1.amazonaws.com/prometeo-nestjs-hex-boilerplate:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000

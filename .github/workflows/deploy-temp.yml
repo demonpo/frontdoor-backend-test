@@ -1,0 +1,86 @@
+name: Deploy to Amazon ECS
+env:
+  APP_NAME: ${{ github.event.repository.name }}
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check commit status
+      uses: LouisBrunner/checks-action@v1.1.1
+      if: always()
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        name: Tests
+        conclusion: ${{ job.status }}
+        output: |
+          {"summary":"Test checked"}
+
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v1
+      with:
+        version: 'v1.21.3'
+      id: install
+
+    - name: Create .env
+      uses: "DamianReeves/write-file-action@master"
+      with:
+        path: ./.env
+        write-mode: overwrite
+        contents: ${{ secrets.TEST_ENV }}
+
+    - name: Create .npmrc
+      uses: "DamianReeves/write-file-action@master"
+      with:
+        path: ./.npmrc
+        write-mode: overwrite
+        contents: ${{ secrets.DOT_NPMRC }}
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ env.APP_NAME }}
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        echo "$ECR_REGISTRY"
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+        docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+    #- name: Update kube config
+    #  run: aws eks update-kubeconfig --name ${{ env.APP_NAME }} --region us-east-1 --zones=us-east-1a,us-east-1b
+
+    #- name: Create cluster kube config
+    #  run: aws eks create-cluster --name ${{ env.APP_NAME }} --region us-east-1 --role-arn arn:aws:iam::036310137459:role/eksClusterRole --resources-vpc-config subnetIds=subnet-0d350864739856223,subnet-0e091a7d86d64ef8c
+    #  continue-on-error: true
+
+    - name: Update kube config
+      run: aws eks update-kubeconfig --name ${{ env.APP_NAME }} --region us-east-1
+
+    - name: Deploy image to Amazon EKS
+      run: |
+        kubectl apply -f eks/aws-auth.yaml
+        kubectl apply -f eks/deployment.yaml
+        kubectl apply -f eks/service.yaml
+    #    kubectl apply -f eks/issuer.yaml
+    #    kubectl apply -f eks/ingress.yaml
