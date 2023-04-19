@@ -10,10 +10,10 @@ services:
     env_file:
       - ./.env
     environment:
-      POSTGRESQL_HOST: database
-      POSTGRESQL_USERNAME: postgres
-      POSTGRESQL_PASSWORD: password
-      POSTGRESQL_DATABASE: test
+      MONGO_INITDB_HOST: database
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: dev
     ports:
       - '3000:3000'
     volumes:
@@ -28,13 +28,16 @@ services:
 
   database:
     container_name: database
-    image: postgres:11-alpine
+    image: mongo:latest
     restart: always
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: test
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: dev
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     ports:
-      - '5433:5432'
+      - 27017:27017
     networks:
       - backend
 

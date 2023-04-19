@@ -8,7 +8,7 @@ export class ExceptionHandlerFilter implements ExceptionFilter {
     const context = host.switchToHttp();
     const response = context.getResponse<Response>();
     const request = context.getRequest<Request>();
-    const errorMiddleware = errorHandler();
+    const errorMiddleware = errorHandler({ debugMode: true });
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     errorMiddleware(exception, request, response, () => {});

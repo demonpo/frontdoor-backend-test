@@ -1,11 +1,13 @@
+import 'dotenv/config';
+
 const typeormConfig: any = {
-  type: 'postgres',
-  host: process.env.POSTGRESQL_HOST || 'localhost',
+  type: 'mongodb' as const,
+  host: process.env.MONGO_INITDB_HOST || 'localhost',
   url: process.env.POSTGRESQL_URL,
-  port: process.env.DB_PORT || 5432,
-  username: process.env.POSTGRESQL_USERNAME || 'postgres',
-  password: process.env.POSTGRESQL_PASSWORD || 'password',
-  database: process.env.POSTGRESQL_DATABASE,
+  port: process.env.DB_PORT || 27017,
+  username: process.env.MONGO_INITDB_ROOT_USERNAME || 'mongo',
+  password: process.env.MONGO_INITDB_ROOT_PASSWORD || 'password',
+  database: process.env.MONGO_INITDB_DATABASE || 'dev',
   entities: [`${__dirname}/../**/*.entity.{js,ts}`],
   subscribers: [`${__dirname}/../**/*.subscriber.{js,ts}`],
   migrations: [`${__dirname}/migrations/*.{js,ts}`],

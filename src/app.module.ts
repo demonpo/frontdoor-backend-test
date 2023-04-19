@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserModule } from './users/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './users/user.module';
 import { SharedModule } from './shared/shared.module';
 import typeormConfig from './database/typeorm-config';
+import { HighlightModule } from './highlights/highlight.module';
 
 @Module({
   imports: [
@@ -12,9 +12,10 @@ import typeormConfig from './database/typeorm-config';
       ...typeormConfig,
     }),
     UserModule,
+    HighlightModule,
     SharedModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}

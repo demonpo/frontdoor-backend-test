@@ -1,16 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, ObjectID } from 'typeorm';
 
 @Entity({ name: 'user' })
 export class UserEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  @ObjectIdColumn()
+  _id!: ObjectID;
 
-  @Column({ name: 'first_name', nullable: false })
-  firstName!: string;
+  @Column({ name: 'name', type: 'varchar', length: 255, nullable: false })
+  name!: string;
 
-  @Column({ name: 'last_name', nullable: false })
-  lastName!: string;
-
-  @Column({ name: 'email', nullable: false })
+  @Column({ name: 'email', type: 'varchar', length: 255, nullable: false })
   email!: string;
 }
