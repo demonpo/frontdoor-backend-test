@@ -1,4 +1,8 @@
-export interface CreateHighlightDto {
+import { IsNotEmpty, IsString } from 'class-validator';
+
+export class CreateHighlightDto {
+  @IsNotEmpty()
+  @IsString()
   content: string;
 }
 
