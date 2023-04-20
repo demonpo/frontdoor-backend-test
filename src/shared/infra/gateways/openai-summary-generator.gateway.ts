@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Configuration, OpenAIApi } from 'openai';
-import { SummaryGenerator } from 'src/shared/domain/gateways';
+import { SummaryGenerator } from '../../domain/gateways';
 
 @Injectable()
 export class OpenAISummaryGenerator implements SummaryGenerator {
@@ -51,7 +51,7 @@ export class OpenAISummaryGenerator implements SummaryGenerator {
   private tagsCompletion(text: string) {
     return this.openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Extract two or three keywords in an ordered list from this text: ${text}`,
+      prompt: `Extract two or three keywords in an ordered list from this text: ${text} ----END----`,
       temperature: 0.5,
       top_p: 1,
       frequency_penalty: 0.8,

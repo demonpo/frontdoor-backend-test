@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { hash, compare } from 'bcrypt';
-import { HashGenerator } from 'src/users/domain/contracts/gateways';
+import { HashGenerator } from '../../domain/contracts/gateways';
 
 @Injectable()
 export class BCryptHashGenerator implements HashGenerator {

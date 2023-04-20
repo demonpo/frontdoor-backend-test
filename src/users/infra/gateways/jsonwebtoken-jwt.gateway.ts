@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { sign, decode } from 'jsonwebtoken';
-import { env } from 'src/config/env';
-import { JWTGenerator } from 'src/users/domain/contracts/gateways';
-import { TokenData, Tokens, User } from 'src/users/domain/entities';
+import { env } from '../../../config/env';
+import { JWTGenerator } from '../../domain/contracts/gateways';
+import { TokenData, Tokens, User } from '../../domain/entities';
 
 @Injectable()
 export class JsonWebTokenJWTGenerator implements JWTGenerator {

@@ -1,4 +1,4 @@
-import { Highlight } from 'src/highlights/domain/entities';
+import { Highlight } from '../../domain/entities';
 import { HighlightResponse } from '../dtos';
 
 export class HighlightDtoMapper {

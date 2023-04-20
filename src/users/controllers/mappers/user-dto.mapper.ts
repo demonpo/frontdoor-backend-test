@@ -1,4 +1,4 @@
-import { User } from 'src/users/domain/entities';
+import { User } from '../../domain/entities';
 import { RegisterDto, UserResponse } from '../dtos';
 
 export class UserDtoMapper {

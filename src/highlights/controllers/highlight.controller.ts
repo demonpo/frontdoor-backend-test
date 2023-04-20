@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { HighlightService } from '../domain/services';
-import { SummaryService } from 'src/shared/domain/services';
+import { SummaryService } from '../../shared/domain/services';
 import { CreateHighlightDto } from './dtos';
 import { HighlightDtoMapper } from './mappers';
-import { JWT } from 'src/shared/controller/decorators';
+import { JWT } from '../../shared/controller/decorators';
 import { Highlight } from '../domain/entities';
 
 @Controller('highlight')
@@ -30,6 +30,7 @@ export class HighlightController {
     const { summary, tags } = await this.summaryService.generateSummary({
       text: payload.content,
     });
+    console.log(userId);
     const highlight: Highlight = {
       userId,
       content: payload.content,

@@ -2,7 +2,7 @@ import { Controller, Inject, Post, Body } from '@nestjs/common';
 import { AuthService } from '../domain/services/auth.service';
 import { UserDtoMapper } from './mappers';
 import { LogInDto, RefreshTokenDto, RegisterDto } from './dtos';
-import { JWT } from 'src/shared/controller/decorators';
+import { JWT } from '../../shared/controller/decorators';
 
 @Controller()
 export class AuthController {

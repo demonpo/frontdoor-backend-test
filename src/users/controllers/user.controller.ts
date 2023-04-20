@@ -1,6 +1,6 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { UsersService } from '../domain/services/users.service';
-import { JWT } from 'src/shared/controller/decorators';
+import { JWT } from '../../shared/controller/decorators';
 import { UserDtoMapper } from './mappers';
 
 @Controller('user')

@@ -13,7 +13,7 @@ import {
 } from './infra/gateways';
 import { AuthService } from './domain/services';
 import { AuthController } from './controllers/auth.controller';
-import JwtHandler from 'src/shared/infra/middlewares/jwt-handler.middleware';
+import JwtHandler from '../shared/infra/middlewares/jwt-handler.middleware';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity]), SharedModule],

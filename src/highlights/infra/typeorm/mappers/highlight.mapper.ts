@@ -1,4 +1,4 @@
-import { Highlight } from 'src/highlights/domain/entities';
+import { Highlight } from '../../../domain/entities';
 import { HighlightEntity } from '../entities';
 import { ObjectID } from 'mongodb';
 
