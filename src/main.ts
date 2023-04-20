@@ -17,6 +17,7 @@ async function bootstrap() {
   );
   app.useGlobalFilters(new ExceptionHandlerFilter());
   await import('./events/producer');
+  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();
