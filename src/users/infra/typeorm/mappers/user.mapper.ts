@@ -1,5 +1,5 @@
 import { UserEntity } from '../entities/user.entity';
-import { User } from '../../../domain/entities/user.entitiy';
+import { User } from '../../../domain/entities/user.entity';
 import { ObjectID } from 'mongodb';
 
 export class UserMapper {
@@ -22,8 +22,9 @@ export class UserMapper {
   public static toEntity(user: User): UserEntity {
     const userEntity = new UserEntity();
     userEntity._id = new ObjectID(user.id);
-    userEntity.name = user.name;
     userEntity.email = user.email;
+    userEntity.password = user.password;
+    userEntity.refreshToken = user.refreshToken;
     return userEntity;
   }
 }

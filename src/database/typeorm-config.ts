@@ -16,6 +16,7 @@ const typeormConfig: any = {
   cli: {
     migrationsDir: __dirname + '/migrations',
   },
+  synchronize: true,
 };
 
 export default typeormConfig;

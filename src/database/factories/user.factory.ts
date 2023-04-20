@@ -8,7 +8,6 @@ export class UserFactory extends Factory<UserEntity> {
   protected attrs(): FactorizedAttrs<UserEntity> {
     return {
       _id: new ObjectID(faker.datatype.hexadecimal(24)),
-      name: faker.name.fullName(),
       email: faker.internet.email(),
     };
   }

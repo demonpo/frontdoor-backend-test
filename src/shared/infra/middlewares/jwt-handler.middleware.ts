@@ -4,7 +4,7 @@ import { env } from '../../../config/env';
 export const JwtHandler = () =>
   jwtHandler({
     jwtHeaderName: 'authorization',
-    secret: env.jwtSecretKey,
+    secret: env.jwtSecretAccessKey,
     debugMode: true,
   });
 
