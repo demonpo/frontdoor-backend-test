@@ -51,7 +51,7 @@ export class OpenAISummaryGenerator implements SummaryGenerator {
   private tagsCompletion(text: string) {
     return this.openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: `Extract two or three keywords in an ordered list from this text: ${text} ----END----`,
+      prompt: `Extract two or three keywords (keyword can only be 1 word) in an ordered list from this text: ${text} ----END----`,
       temperature: 0.5,
       top_p: 1,
       frequency_penalty: 0.8,
